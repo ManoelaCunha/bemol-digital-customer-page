@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
-import { IUserDataSignUp, IAddress } from "../../types/types";
+import { IUserDataSignUp } from "../../types/types";
 
 import {
   CssBox,
@@ -156,7 +156,7 @@ const SignUp = () => {
               endAdornment: <CssPersonIcon />,
             }}
             onKeyPress={(event) => {
-              console.log(event.detail);
+              console.log(event);
               if (event.key === "Enter") {
                 setState(true);
               }

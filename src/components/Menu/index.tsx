@@ -1,7 +1,7 @@
 import { IconButton } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
-import img from "../../assets/Mask Group.png";
+import img from "../../assets/logo-bemol-digital.webp";
 
 import {
   CssAppBar,

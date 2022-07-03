@@ -1,13 +1,13 @@
+import { Typography } from "@material-ui/core";
 import Menu from "../../components/Menu";
-//import ProductsList from "../../components/ProductsList";
-//import { useProducts } from "../../providers/Products";
 
 const Home = () => {
-  //const { products } = useProducts();
-
   return (
     <>
       <Menu />
+      <Typography variant="h4" color="inherit" style={{ margin: "20px" }}>
+        Em construção....
+      </Typography>
     </>
   );
 };

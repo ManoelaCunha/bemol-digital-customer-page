@@ -14,11 +14,11 @@ export const CssBox = styled(Box)({
 
 export const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#219653",
+    color: "#241178",
   },
   "& .MuiOutlinedInput-root": {
     "&.Mui-focused fieldset": {
-      borderColor: "#219653",
+      borderColor: "#241178",
     },
   },
   width: "260px",
@@ -29,6 +29,7 @@ export const CssTextField = styled(TextField)({
 });
 
 export const CssPaper = styled(Paper)({
+  marginTop: "410px",
   padding: "20px",
   width: "260px",
   "@media (min-width:780px)": {

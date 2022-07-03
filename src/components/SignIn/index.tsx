@@ -96,7 +96,7 @@ const SignIn = () => {
       </form>
       <div>
         <CssTypographyText variant="subtitle2">
-          Crie sua conta para saborear muitas delícias e matar sua fome!
+          Não tem uma conta? Então Cadastre-se!
         </CssTypographyText>
       </div>
       <div>

@@ -8,11 +8,11 @@ import {
 
 export const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
-    color: "#219653",
+    color: "#241178",
   },
   "& .MuiOutlinedInput-root": {
     "&.Mui-focused fieldset": {
-      borderColor: "#219653",
+      borderColor: "#241178",
     },
   },
   width: "260px",
@@ -42,13 +42,13 @@ export const CssButtonSignIn = styled(Button)({
   color: "white",
   width: "260px",
   margin: "10px 0px",
-  background: "#219653",
+  background: "#241178",
   "@media (min-width:780px)": {
     width: "360px",
   },
   "&:hover": {
     color: "#ffff",
-    background: "#219653",
+    background: "#241178",
   },
 });
 
