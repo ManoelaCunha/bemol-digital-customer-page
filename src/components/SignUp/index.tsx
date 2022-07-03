@@ -1,8 +1,9 @@
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { IUserDataSignUp } from "../../types/types";
@@ -12,6 +13,7 @@ import {
   CssButtonSignUp,
   CssEmailIcon,
   CssPaper,
+  CssHomeIcon,
   CssPersonIcon,
   CssTextField,
   CssTypographyText,
@@ -22,10 +24,9 @@ import {
 
 const SignUp = () => {
   const history = useHistory();
-  const { SignUp, getCepAddress } = useAuth();
+  const { SignUp, getCepAddress, address } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [state, setState] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -57,21 +58,31 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IUserDataSignUp>({ resolver: yupResolver(formSchema) });
 
-  // const handlerEvent = (event: any) => {
-  //   if (event.key === "Enter") {
-  //     setState(event.key);
-  //   }
-  // };
-
   const onSubmit = (data: IUserDataSignUp) => {
-    console.log(state);
-    console.log(data.address.cep.replace(/\D/g, ""));
-    getCepAddress(data.address.cep.replace(/\D/g, ""));
-    //SignUp(data, history);
+    SignUp(data, history);
   };
+
+  const validatedCEP = (event: any) => {
+    const cep = event.target.value.replace(/\D/g, "");
+
+    getCepAddress(cep);
+  };
+
+  useEffect(() => {
+    if ("erro" in address) {
+      setValue("address.cep", "");
+      toast.warn("Atenção! Formato de CEP inválido!");
+    }
+
+    setValue("address.street", address.logradouro);
+    setValue("address.district", address.bairro);
+    setValue("address.city", address.localidade);
+    setValue("address.state", address.uf);
+  }, [address]);
 
   return (
     <CssPaper elevation={3}>
@@ -95,6 +106,9 @@ const SignUp = () => {
             InputProps={{
               endAdornment: <CssPersonIcon />,
             }}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
@@ -109,6 +123,9 @@ const SignUp = () => {
             helperText={errors.cpf?.message}
             InputProps={{
               endAdornment: <CssPersonIcon />,
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>
@@ -125,13 +142,16 @@ const SignUp = () => {
             InputProps={{
               endAdornment: <CssPersonIcon />,
             }}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
           <CssTextField
             type="text"
             size="small"
-            label="Identificação"
+            label="Identificação - casa/apartamento"
             margin="normal"
             variant="outlined"
             {...register("address.identification")}
@@ -139,6 +159,9 @@ const SignUp = () => {
             helperText={errors.address?.identification?.message}
             InputProps={{
               endAdornment: <CssPersonIcon />,
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>
@@ -153,14 +176,12 @@ const SignUp = () => {
             error={!!errors.address?.cep}
             helperText={errors.address?.cep?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
             }}
-            onKeyPress={(event) => {
-              console.log(event);
-              if (event.key === "Enter") {
-                setState(true);
-              }
+            InputLabelProps={{
+              shrink: true,
             }}
+            onBlur={validatedCEP}
           />
         </div>
         <div>
@@ -174,13 +195,16 @@ const SignUp = () => {
             error={!!errors.address?.street}
             helperText={errors.address?.street?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
             }}
-            //value={state && add.street}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
           <CssTextField
+            id="outlined-number"
             type="number"
             size="small"
             label="Numero"
@@ -190,7 +214,10 @@ const SignUp = () => {
             error={!!errors.address?.number}
             helperText={errors.address?.number?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>
@@ -205,9 +232,11 @@ const SignUp = () => {
             error={!!errors.address?.district}
             helperText={errors.address?.district?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
             }}
-            //value={state && add.district}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
@@ -221,9 +250,11 @@ const SignUp = () => {
             error={!!errors.address?.city}
             helperText={errors.address?.city?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
             }}
-            //value={state && add.city}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
@@ -237,9 +268,11 @@ const SignUp = () => {
             error={!!errors.address?.state}
             helperText={errors.address?.state?.message}
             InputProps={{
-              endAdornment: <CssPersonIcon />,
+              endAdornment: <CssHomeIcon />,
             }}
-            //value={state && add.state}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
@@ -254,6 +287,9 @@ const SignUp = () => {
             helperText={errors.email?.message}
             InputProps={{
               endAdornment: <CssEmailIcon />,
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>
@@ -273,6 +309,9 @@ const SignUp = () => {
               ) : (
                 <CssVisibilityIcon onClick={handleShowPassword} />
               ),
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>

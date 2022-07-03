@@ -1,5 +1,9 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { IUserDataSignIn, IUserDataSignUp } from "../../types/types";
+import {
+  IUserDataSignIn,
+  IUserDataSignUp,
+  IValidatedCEP,
+} from "../../types/types";
 import { toast } from "react-toastify";
 import { History } from "history";
 import { customersApi, cepApi } from "../../services";
@@ -9,6 +13,7 @@ interface AuthProviderProps {
 }
 
 interface AuthProviderData {
+  address: IValidatedCEP;
   authToken: string;
   SignUp: (userData: IUserDataSignUp, history: History) => void;
   SignIn: (userData: IUserDataSignIn, history: History) => void;
@@ -22,6 +27,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authToken, setAuthToken] = useState(
     () => localStorage.getItem("@BemolDigital:token") || ""
   );
+
+  const [address, setAddress] = useState({} as IValidatedCEP);
 
   const SignUp = (userData: IUserDataSignUp, history: History) => {
     customersApi
@@ -37,7 +44,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     customersApi
       .post("api/users/login/", userData)
       .then((response) => {
-        console.log(response);
         localStorage.setItem("@BemolDigital:token", response.data.token);
         setAuthToken(response.data.token);
         toast.success("Sucesso ao fazer Login!");
@@ -56,14 +62,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     cepApi
       .get(`${cep}/json/`)
       .then((response) => {
-        console.log(response.data);
+        setAddress(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <AuthContext.Provider
-      value={{ authToken, Logout, SignIn, SignUp, getCepAddress }}
+      value={{
+        authToken,
+        Logout,
+        SignIn,
+        SignUp,
+        getCepAddress,
+        address,
+      }}
     >
       {children}
     </AuthContext.Provider>

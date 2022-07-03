@@ -67,6 +67,9 @@ const SignIn = () => {
             InputProps={{
               endAdornment: <CssEmailIcon />,
             }}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div>
@@ -85,6 +88,9 @@ const SignIn = () => {
               ) : (
                 <CssVisibilityIcon onClick={handleShowPassword} />
               ),
+            }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
         </div>

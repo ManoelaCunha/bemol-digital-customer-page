@@ -24,3 +24,11 @@ export interface IUserDataSignIn {
   email: string;
   password: string;
 }
+
+export interface IValidatedCEP {
+  cep: string;
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+}

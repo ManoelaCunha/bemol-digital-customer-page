@@ -5,6 +5,7 @@ import {
   VisibilityOffOutlined,
   EmailOutlined,
   Person,
+  Home,
 } from "@material-ui/icons";
 
 export const CssBox = styled(Box)({
@@ -60,6 +61,11 @@ export const CssPersonIcon = styled(Person)({
 });
 
 export const CssEmailIcon = styled(EmailOutlined)({
+  color: "#828282",
+  fontSize: "18px",
+});
+
+export const CssHomeIcon = styled(Home)({
   color: "#828282",
   fontSize: "18px",
 });
